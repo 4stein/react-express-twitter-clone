@@ -146,7 +146,7 @@ export const SignIn: React.FC = (): React.ReactElement => {
             color="primary"
             fullWidth
           >
-            Register
+            Sign up
           </Button>
           <Button
             onClick={handleClickOpenSignIn}
@@ -154,7 +154,7 @@ export const SignIn: React.FC = (): React.ReactElement => {
             color="primary"
             fullWidth
           >
-            Log in
+            Log In
           </Button>
           <ModalBlock
             visible={visibleModal === "signIn"}
@@ -198,7 +198,7 @@ export const SignIn: React.FC = (): React.ReactElement => {
                   color="primary"
                   fullWidth
                 >
-                  Log in
+                  Log In
                 </Button>
               </FormGroup>
             </FormControl>
@@ -252,7 +252,7 @@ export const SignIn: React.FC = (): React.ReactElement => {
                   fullWidth
                 />
                 <Button variant="contained" color="primary" fullWidth>
-                  Register
+                  Next
                 </Button>
               </FormGroup>
             </FormControl>

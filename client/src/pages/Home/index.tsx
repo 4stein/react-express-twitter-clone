@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import Divider from "@material-ui/core/Divider/Divider";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
@@ -16,16 +16,35 @@ import Avatar from "@material-ui/core/Avatar/Avatar";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import List from "@material-ui/core/List/List";
 import Button from "@material-ui/core/Button/Button";
+import { Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { AddTweetForm } from "../../components/AddTweetForm";
 import { Tweet } from "../../components/Tweet";
 import { SideMenu } from "../../components/SideMenu";
 import { useHomeStyles } from "./theme";
 import { SearchTextField } from "../../components/SearchTextField";
+import { fetchTweets } from "../../store/ducks/tweets/actionCreators";
+import {
+  selectIsTweetsLoading,
+  selectTweetsItems,
+} from "../../store/ducks/tweets/selectors";
+import { Tags } from "../../components/Tags";
 
+import BackButton from "../../components/BackButton";
+import FullTweet from "../../components/FullTweet";
+// import { fetchTweet } from "../../store/ducks/tweet/actionCreators";
 
 export const Home = (): React.ReactElement => {
   const classes = useHomeStyles();
+  const dispatch = useDispatch();
+  const tweets = useSelector(selectTweetsItems);
+  const isLoading = useSelector(selectIsTweetsLoading);
+
+  React.useEffect(() => {
+    dispatch(fetchTweets());
+    // dispatch(fetchTweet("62bc339b466f0d3ab8435d2b"));
+  }, [dispatch]);
 
   return (
     <Container className={classes.wrapper} maxWidth="lg">
@@ -36,35 +55,47 @@ export const Home = (): React.ReactElement => {
         <Grid sm={8} md={6} item>
           <Paper className={classes.tweetsWrapper} variant="outlined">
             <Paper className={classes.tweetsHeader} variant="outlined">
-              <Typography variant="h6">Home</Typography>
+              <Route path="/home/:any">
+                <BackButton />
+              </Route>
+              <Route path="/home/tweet">
+                <Typography variant="h6">Tweeting</Typography>
+              </Route>
+              <Route path={["/home", "/home/search"]} exact>
+                <Typography variant="h6">Tweets</Typography>
+              </Route>
             </Paper>
-            <Paper>
-              <div className={classes.addForm}>
-                <AddTweetForm classes={classes} />
-              </div>
-              <div className={classes.addFormBottomLine} />
-            </Paper>
-            {[
-              ...new Array(20).fill(
-                <Tweet
-                  text="A petition that in each pack of crackers there should always be one large three-layer king-crout sprinkled with chemical spices."
-                  user={{
-                    fullname: "Glafira Zhur",
-                    username: "GlafiraZhur",
-                    avatarUrl:
-                      "https://images.unsplash.com/photo-1528914457842-1af67b57139d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-                  }}
-                  classes={classes}
-                />
-              ),
-            ]}
+
+            <Route path={["/home", "/home/search"]} exact>
+              <Paper>
+                <div className={classes.addForm}>
+                  <AddTweetForm classes={classes} />
+                </div>
+                <div className={classes.addFormBottomLine} />
+              </Paper>
+            </Route>
+
+            <Route path="/home" exact>
+              {isLoading ? (
+                <div className={classes.tweetsCentred}>
+                  <CircularProgress />
+                </div>
+              ) : (
+                tweets.map((tweet) => (
+                  <Tweet key={tweet._id} classes={classes} {...tweet} />
+                ))
+              )}
+            </Route>
+
+            <Route path="/home/tweet/:id" component={FullTweet} exact />
+
           </Paper>
         </Grid>
         <Grid sm={3} md={3} item>
           <div className={classes.rightSide}>
             <SearchTextField
               variant="outlined"
-              placeholder="Twitter search"
+              placeholder="Search on Tweeter"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -74,61 +105,7 @@ export const Home = (): React.ReactElement => {
               }}
               fullWidth
             />
-            <Paper className={classes.rightSideBlock}>
-              <Paper
-                className={classes.rightSideBlockHeader}
-                variant="outlined"
-              >
-                <b>Topics</b>
-              </Paper>
-              <List>
-                <ListItem className={classes.rightSideBlockItem}>
-                  <ListItemText
-                    primary="Kiev"
-                    secondary={
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textSecondary"
-                      >
-                        Tweets: 3 331
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-                <Divider component="li" />
-                <ListItem className={classes.rightSideBlockItem}>
-                  <ListItemText
-                    primary="#coronavirus"
-                    secondary={
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textSecondary"
-                      >
-                        Tweets: 163,122
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-                <Divider component="li" />
-                <ListItem className={classes.rightSideBlockItem}>
-                  <ListItemText
-                    primary="Great Britain"
-                    secondary={
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textSecondary"
-                      >
-                        Tweets: 13 554
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-                <Divider component="li" />
-              </List>
-            </Paper>
+            <Tags />
             <Paper className={classes.rightSideBlock}>
               <Paper
                 className={classes.rightSideBlockHeader}

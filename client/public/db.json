@@ -1,0 +1,126 @@
+{
+  "tweets": [
+    {
+      "_id": "62bc339b466f0d3ab8435d2b",
+      "text": "Id duis exercitation occaecat anim.",
+      "user": {
+        "fullname": "Faith Turner",
+        "username": "fowler",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    },
+    {
+      "_id": "62bc339b826e9219f790969a",
+      "text": "Duis quis ullamco occaecat dolor exercitation culpa pariatur eu aute elit ut.",
+      "user": {
+        "fullname": "Oconnor Nguyen",
+        "username": "crane",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    },
+    {
+      "_id": "62bc339b49f0f5311262d047",
+      "text": "Minim do aute velit consectetur esse est tempor ipsum magna exercitation.",
+      "user": {
+        "fullname": "Russo Leblanc",
+        "username": "salas",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    },
+    {
+      "_id": "62bc339b1a21b9f01cdd88c1",
+      "text": "Nostrud occaecat nostrud esse tempor deserunt tempor ex in.",
+      "user": {
+        "fullname": "Hill Mcdaniel",
+        "username": "holman",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    },
+    {
+      "_id": "62bc339b35bf620aa347dcbe",
+      "text": "Sunt consequat esse voluptate consectetur veniam exercitation ea aliquip magna in magna.",
+      "user": {
+        "fullname": "Letitia Cantrell",
+        "username": "moon",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    },
+    {
+      "_id": "62bc339bcf77579ff607c937",
+      "text": "Aliquip cupidatat sunt reprehenderit amet proident Lorem nulla.",
+      "user": {
+        "fullname": "Olga Preston",
+        "username": "donaldson",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    },
+    {
+      "_id": "62bc339b8a24602061f9eb2d",
+      "text": "Non et sint laborum deserunt labore nostrud amet consectetur ad sunt aute in.",
+      "user": {
+        "fullname": "Hampton Leach",
+        "username": "hart",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    },
+    {
+      "_id": "62bc339b1971484868a0c68b",
+      "text": "Amet adipisicing fugiat reprehenderit ipsum esse.",
+      "user": {
+        "fullname": "Ewing Dixon",
+        "username": "myra",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    },
+    {
+      "_id": "62bc339b8c9a92466be2c8fe",
+      "text": "Quis proident labore non veniam incididunt veniam qui.",
+      "user": {
+        "fullname": "Margery Olsen",
+        "username": "mai",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    },
+    {
+      "_id": "62bc339b696902461c11ebbd",
+      "text": "Sint Lorem elit consequat laboris est.",
+      "user": {
+        "fullname": "Alston Young",
+        "username": "jeannie",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+      }
+    }
+  ],
+  "tags": [
+    { "_id": "62bd339b466f0s3ab8435701", "name": "nature", "count": 1121 },
+    { "_id": "62bd339b466f0s3ab8435702", "name": "winter", "count": 401 },
+    { "_id": "62bd339b466f0s3ab8435703", "name": "games", "count": 1403 },
+    { "_id": "62bd339b466f0s3ab8435704", "name": "story", "count": 678 }
+  ],
+  "users": [
+    {
+      "_id": "62bc339b466f0d3ab8435701",
+      "fullname": "Oconnor Nguyen",
+      "username": "crane",
+      "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+    },
+    {
+      "_id": "62bc339b466f0d3ab8435702",
+      "fullname": "Hill Mcdaniel",
+      "username": "holman",
+      "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+    },
+    {
+      "_id": "62bc339b466f0d3ab8435703",
+      "fullname": "Ewing Dixon",
+      "username": "myra",
+      "avatarUrl": "https://source.unsplash.com/random/100x100?face"
+    }
+  ],
+  "user": {
+    "_id": "62bc339b466f0d3ab8435710",
+    "fullname": "Mike Doruchenko",
+    "username": "4stein",
+    "avatarUrl": "https://scontent.fiev24-1.fna.fbcdn.net/v/t39.30808-1/244697508_1886106798217814_8643688549211563206_n.jpg?stp=c0.0.40.40a_cp0_dst-jpg_p40x40&_nc_cat=110&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=D6uyB7rPzGIAX_CHajy&_nc_ht=scontent.fiev24-1.fna&oh=00_AT-qqOJ3ArR-vLYyivVF1NLDQ2i5tiNJr_Bfucuew97hHw&oe=62C8ACFA"
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import SearchIcon from "@material-ui/icons/Search";
 import NotificationIcon from "@material-ui/icons/NotificationsNoneOutlined";
@@ -6,11 +6,15 @@ import MessageIcon from "@material-ui/icons/EmailOutlined";
 import BookmarkIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import ListIcon from "@material-ui/icons/ListAltOutlined";
 import UserIcon from "@material-ui/icons/PermIdentityOutlined";
-import { Button, Hidden, IconButton, Typography } from "@material-ui/core";
+import CreateIcon from "@material-ui/icons/Create";
+import Hidden from "@material-ui/core/Hidden";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 import { useHomeStyles } from "../pages/Home/theme";
-import { EditOutlined } from "@material-ui/icons";
 import { ModalBlock } from "./ModalBlock";
 import { AddTweetForm } from "./AddTweetForm";
+import { Link } from "react-router-dom";
 
 interface SideMenuProps {
   classes: ReturnType<typeof useHomeStyles>;
@@ -19,7 +23,8 @@ interface SideMenuProps {
 export const SideMenu: React.FC<SideMenuProps> = ({
   classes,
 }: SideMenuProps): React.ReactElement => {
-  const [setVisibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
+  const [visibleAddTweet, setSetVisibleAddTweet] =
+    React.useState<boolean>(false);
 
   const handleClickOpenAddTweet = () => {
     setSetVisibleAddTweet(true);
@@ -32,9 +37,11 @@ export const SideMenu: React.FC<SideMenuProps> = ({
   return (
     <ul className={classes.sideMenuList}>
       <li className={classes.sideMenuListItem}>
-        <IconButton className={classes.logo} aria-label="" color="primary">
-          <TwitterIcon className={classes.logoIcon} />
-        </IconButton>
+        <Link to="/home">
+          <IconButton className={classes.logo} aria-label="" color="primary">
+            <TwitterIcon className={classes.logoIcon} />
+          </IconButton>
+        </Link>
       </li>
       <li className={classes.sideMenuListItem}>
         <div>
@@ -59,6 +66,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
       <li className={classes.sideMenuListItem}>
         <div>
           <MessageIcon className={classes.sideMenuListItemIcon} />
+
           <Hidden smDown>
             <Typography className={classes.sideMenuListItemLabel} variant="h6">
               Messages
@@ -69,6 +77,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
       <li className={classes.sideMenuListItem}>
         <div>
           <BookmarkIcon className={classes.sideMenuListItemIcon} />
+
           <Hidden smDown>
             <Typography className={classes.sideMenuListItemLabel} variant="h6">
               Bookmarks
@@ -79,6 +88,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
       <li className={classes.sideMenuListItem}>
         <div>
           <ListIcon className={classes.sideMenuListItemIcon} />
+
           <Hidden smDown>
             <Typography className={classes.sideMenuListItemLabel} variant="h6">
               List
@@ -89,6 +99,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
       <li className={classes.sideMenuListItem}>
         <div>
           <UserIcon className={classes.sideMenuListItemIcon} />
+
           <Hidden smDown>
             <Typography className={classes.sideMenuListItemLabel} variant="h6">
               Profile
@@ -106,15 +117,12 @@ export const SideMenu: React.FC<SideMenuProps> = ({
         >
           <Hidden smDown>Tweet</Hidden>
           <Hidden mdUp>
-            <EditOutlined />
+            <CreateIcon />
           </Hidden>
         </Button>
-        <ModalBlock
-          visible={setVisibleAddTweet}
-          onClose={onCloseAddTweet}
-        >
-          <div style={{ width: "550px" }}>
-            <AddTweetForm classes={classes} />
+        <ModalBlock onClose={onCloseAddTweet} visible={visibleAddTweet}>
+          <div style={{ width: 550 }}>
+            <AddTweetForm maxRows={15} classes={classes} />
           </div>
         </ModalBlock>
       </li>
