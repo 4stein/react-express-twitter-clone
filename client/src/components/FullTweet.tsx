@@ -1,7 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CircularProgress } from "@material-ui/core";
-
+import {
+  Avatar,
+  CircularProgress,
+  // IconButton,
+  Paper,
+  Typography,
+} from "@material-ui/core";
+// import CommentIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
+// import RepostIcon from "@material-ui/icons/RepeatOutlined";
+// import LikeIcon from "@material-ui/icons/FavoriteBorderOutlined";
+// import ShareIcon from "@material-ui/icons/ReplyOutlined";
 import { useHomeStyles } from "../pages/Home/theme";
 import {
   selectIsTweetLoading,
@@ -9,7 +18,7 @@ import {
 } from "../store/ducks/tweet/selectors";
 import { fetchTweet, setTweet } from "../store/ducks/tweet/actionCreators";
 import { useParams } from "react-router-dom";
-import { Tweet } from "./Tweet";
+import classNames from "classnames";
 
 const FullTweet: React.FC = (): React.ReactElement => {
   const params: { id: string } = useParams();
@@ -35,7 +44,29 @@ const FullTweet: React.FC = (): React.ReactElement => {
           <CircularProgress />
         </div>
       ) : tweetData ? (
-        <Tweet classes={classes} {...tweetData} />
+        <Paper className={classes.fullTweet}>
+          <div className={classNames(classes.tweetsHeaderUser)}>
+            <Avatar
+              className={classes.tweetAvatar}
+              alt={`User Avatar ${tweetData.user.fullname}`}
+              src={tweetData.user.avatarUrl}
+            />
+            <Typography>
+              <b>{tweetData.user.fullname}</b>&nbsp;
+              <div>
+                <span className={classes.tweetUserName}>
+                  @{tweetData.user.username}
+                </span>
+                &nbsp;
+                <span className={classes.tweetUserName}>·</span>&nbsp;
+                <span className={classes.tweetUserName}>1 ч</span>
+              </div>
+            </Typography>
+          </div>
+          <Typography className={classes.fullTweetText} gutterBottom>
+            {tweetData.text}
+          </Typography>
+        </Paper>
       ) : (
         ""
       )}

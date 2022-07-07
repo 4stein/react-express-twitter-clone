@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -7,7 +9,12 @@ import IconButton from "@material-ui/core/IconButton";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import EmojiIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
+import Alert from "@material-ui/lab/Alert";
+
 import { useHomeStyles } from "../pages/Home/theme";
+import { fetchNewTweet } from "../store/ducks/tweets/actionCreators";
+import { selectAddTweetState } from "../store/ducks/tweets/selectors";
+import { AddTweetState } from "../store/ducks/tweets/contracts/state";
 
 interface AddTweetFormProps {
   classes: ReturnType<typeof useHomeStyles>;
@@ -20,7 +27,12 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
   classes,
   maxRows,
 }: AddTweetFormProps): React.ReactElement => {
-  const [text, setText] = React.useState<string>("");
+  // useState
+  const [text, setText] = useState<string>("");
+  const addTweetState = useSelector(selectAddTweetState);
+  // useDispatch
+  const dispatch = useDispatch();
+
   const textLimitPercent = Math.round((text.length / 280) * 100);
   const textCount = MAX_LENGTH - text.length;
 
@@ -33,6 +45,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
   };
 
   const handleClickAddTweet = (): void => {
+    dispatch(fetchNewTweet(text));
     setText("");
   };
 
@@ -92,14 +105,25 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
           )}
           <Button
             onClick={handleClickAddTweet}
-            disabled={text.length >= MAX_LENGTH}
+            disabled={
+              addTweetState === AddTweetState.LOADING ||
+              !text ||
+              text.length >= MAX_LENGTH
+            }
             color="primary"
             variant="contained"
           >
-            Tweet
+            {addTweetState === AddTweetState.LOADING ? (
+              <CircularProgress />
+            ) : (
+              "Tweet"
+            )}
           </Button>
         </div>
       </div>
+      {addTweetState === AddTweetState.ERROR && (
+        <Alert severity="error">Network Error</Alert>
+      )}
     </div>
   );
 };

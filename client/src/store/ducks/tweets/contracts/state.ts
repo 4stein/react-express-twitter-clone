@@ -1,8 +1,14 @@
 export enum LoadingState {
-  LOADED = 'LOADED',
-  LOADING = 'LOADING',
-  ERROR = 'ERROR',
-  NEVER = 'NEVER',
+  LOADED = "LOADED",
+  LOADING = "LOADING",
+  ERROR = "ERROR",
+  NEVER = "NEVER",
+}
+
+export enum AddTweetState {
+  LOADING = "LOADING",
+  ERROR = "ERROR",
+  NEVER = "NEVER",
 }
 
 export interface Tweet {
@@ -18,4 +24,5 @@ export interface Tweet {
 export interface TweetsState {
   items: Tweet[];
   loadingState: LoadingState;
+  addTweetState: AddTweetState;
 }
