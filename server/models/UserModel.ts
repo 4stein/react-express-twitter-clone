@@ -16,6 +16,7 @@ export interface UserModelInterface {
 
 export type UserModelDocumentInterface = UserModelInterface & Document;
 
+
 const UserSchema = new Schema<UserModelInterface>({
   email: {
     unique: true,
@@ -35,6 +36,7 @@ const UserSchema = new Schema<UserModelInterface>({
   password: {
     required: true,
     type: String,
+    select: false,
   },
   confirmed: {
     type: Boolean,
@@ -43,6 +45,7 @@ const UserSchema = new Schema<UserModelInterface>({
   confirmHash: {
     required: true,
     type: String,
+    select: false,
   },
   location: String,
   about: String,
