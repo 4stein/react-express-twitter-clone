@@ -1,7 +1,7 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 
 const options = {
-  host: process.env.NODEMAILER_HOST || "smtp.mailtrap.io",
+  host: process.env.NODEMAILER_HOST || 'smtp.mailtrap.io',
   port: Number(process.env.NODEMAILER_PORT) || 2525,
   auth: {
     user: process.env.NODEMAILER_USER,

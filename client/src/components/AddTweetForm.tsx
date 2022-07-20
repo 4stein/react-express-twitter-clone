@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import classNames from "classnames";
-
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import IconButton from "@material-ui/core/IconButton";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
-import EmojiIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
-import Alert from "@material-ui/lab/Alert";
-
-import { useHomeStyles } from "../pages/Home/theme";
-import { fetchNewTweet } from "../store/ducks/tweets/actionCreators";
-import { selectAddTweetState } from "../store/ducks/tweets/selectors";
-import { AddTweetState } from "../store/ducks/tweets/contracts/state";
+import React from 'react';
+import classNames from 'classnames';
+import Avatar from '@material-ui/core/Avatar';
+import Alert from '@material-ui/lab/Alert';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import IconButton from '@material-ui/core/IconButton';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
+import EmojiIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
+import { useHomeStyles } from '../pages/theme';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAddTweet } from '../store/ducks/tweets/actionCreators';
+import { selectAddFormState } from '../store/ducks/tweets/selectors';
+import { AddFormState } from '../store/ducks/tweets/contracts/state';
 
 interface AddTweetFormProps {
   classes: ReturnType<typeof useHomeStyles>;
@@ -27,26 +25,22 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
   classes,
   maxRows,
 }: AddTweetFormProps): React.ReactElement => {
-  // useState
-  const [text, setText] = useState<string>("");
-  const addTweetState = useSelector(selectAddTweetState);
-  // useDispatch
   const dispatch = useDispatch();
+  const [text, setText] = React.useState<string>('');
 
+  const addFormState = useSelector(selectAddFormState);
   const textLimitPercent = Math.round((text.length / 280) * 100);
   const textCount = MAX_LENGTH - text.length;
 
-  const handleChangeTextare = (
-    e: React.FormEvent<HTMLTextAreaElement>
-  ): void => {
+  const handleChangeTextare = (e: React.FormEvent<HTMLTextAreaElement>): void => {
     if (e.currentTarget) {
       setText(e.currentTarget.value);
     }
   };
 
   const handleClickAddTweet = (): void => {
-    dispatch(fetchNewTweet(text));
-    setText("");
+    dispatch(fetchAddTweet(text));
+    setText('');
   };
 
   return (
@@ -54,8 +48,8 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
       <div className={classes.addFormBody}>
         <Avatar
           className={classes.tweetAvatar}
-          alt={`Аватарка пользователя UserAvatar`}
-          src="https://pbs.twimg.com/profile_images/796061890451542016/J-O1AguD_bigger.jpg"
+          alt={`User avatar UserAvatar`}
+          src="https://scontent.fiev24-1.fna.fbcdn.net/v/t39.30808-1/244697508_1886106798217814_8643688549211563206_n.jpg?stp=c0.0.40.40a_cp0_dst-jpg_p40x40&_nc_cat=110&ccb=1-7&_nc_sid=7206a8&_nc_ohc=-Jv4EvIoKEoAX-7vpOZ&_nc_ht=scontent.fiev24-1.fna&oh=00_AT8AykVTcPSy5E0e6UVAVaZYfMhhbdINThASBqPACF7QTg&oe=62DC737A"
         />
         <TextareaAutosize
           onChange={handleChangeTextare}
@@ -66,12 +60,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
         />
       </div>
       <div className={classes.addFormBottom}>
-        <div
-          className={classNames(
-            classes.tweetFooter,
-            classes.addFormBottomActions
-          )}
-        >
+        <div className={classNames(classes.tweetFooter, classes.addFormBottomActions)}>
           <IconButton color="primary">
             <ImageOutlinedIcon style={{ fontSize: 26 }} />
           </IconButton>
@@ -89,12 +78,10 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
                   size={20}
                   thickness={5}
                   value={text.length >= MAX_LENGTH ? 100 : textLimitPercent}
-                  style={
-                    text.length >= MAX_LENGTH ? { color: "red" } : undefined
-                  }
+                  style={text.length >= MAX_LENGTH ? { color: 'red' } : undefined}
                 />
                 <CircularProgress
-                  style={{ color: "rgba(0, 0, 0, 0.1)" }}
+                  style={{ color: 'rgba(0, 0, 0, 0.1)' }}
                   variant="static"
                   size={20}
                   thickness={5}
@@ -105,24 +92,24 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
           )}
           <Button
             onClick={handleClickAddTweet}
-            disabled={
-              addTweetState === AddTweetState.LOADING ||
-              !text ||
-              text.length >= MAX_LENGTH
-            }
+            disabled={addFormState === AddFormState.LOADING || !text || text.length >= MAX_LENGTH}
             color="primary"
-            variant="contained"
-          >
-            {addTweetState === AddTweetState.LOADING ? (
-              <CircularProgress />
+            variant="contained">
+            {addFormState === AddFormState.LOADING ? (
+              <CircularProgress color="inherit" size={16} />
             ) : (
-              "Tweet"
+              'Tweet'
             )}
           </Button>
         </div>
       </div>
-      {addTweetState === AddTweetState.ERROR && (
-        <Alert severity="error">Network Error</Alert>
+      {addFormState === AddFormState.ERROR && (
+        <Alert severity="error">
+          Error adding tweet{' '}
+          <span aria-label="emoji-plak" role="img">
+            😞
+          </span>
+        </Alert>
       )}
     </div>
   );

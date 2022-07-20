@@ -146,7 +146,7 @@ export const SignIn: React.FC = (): React.ReactElement => {
             color="primary"
             fullWidth
           >
-            Sign up
+            Register
           </Button>
           <Button
             onClick={handleClickOpenSignIn}
@@ -160,7 +160,7 @@ export const SignIn: React.FC = (): React.ReactElement => {
             visible={visibleModal === "signIn"}
             onClose={handleCloseModal}
             classes={classes}
-            title="Sign in"
+            title="Log In To Account"
           >
             <FormControl
               className={classes.loginFormControl}
@@ -184,7 +184,7 @@ export const SignIn: React.FC = (): React.ReactElement => {
                   className={classes.loginSideField}
                   autoFocus
                   id="password"
-                  label="Пароль"
+                  label="Password"
                   InputLabelProps={{
                     shrink: true,
                   }}

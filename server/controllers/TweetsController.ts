@@ -1,25 +1,22 @@
-import express from "express";
+import express from 'express';
 
-import { validationResult } from "express-validator";
-import { TweetModel } from "../models/TweetModel";
-import { isValidObjectId } from "../utils/isValidObjectId";
-import { UserModelInterface } from "../models/UserModel";
+import { validationResult } from 'express-validator';
+import { TweetModel } from '../models/TweetModel';
+import { isValidObjectId } from '../utils/isValidObjectId';
+import { UserModelInterface } from '../models/UserModel';
 
 class TweetsController {
   async index(_: any, res: express.Response): Promise<void> {
     try {
-      const tweets = await TweetModel.find({})
-        .populate("user")
-        .sort({ createdAt: "-1" })
-        .exec();
+      const tweets = await TweetModel.find({}).populate('user').sort({ 'createdAt': '-1' }).exec();
 
       res.json({
-        status: "success",
+        status: 'success',
         data: tweets,
       });
     } catch (error) {
       res.status(500).json({
-        status: "error",
+        status: 'error',
         message: error,
       });
     }
@@ -34,7 +31,7 @@ class TweetsController {
         return;
       }
 
-      const tweet = await TweetModel.findById(tweetId).populate("user").exec();
+      const tweet = await TweetModel.findById(tweetId).populate('user').exec();
 
       if (!tweet) {
         res.status(404).send();
@@ -42,42 +39,12 @@ class TweetsController {
       }
 
       res.json({
-        status: "success",
+        status: 'success',
         data: tweet,
       });
     } catch (error) {
       res.status(500).json({
-        status: "error",
-        message: error,
-      });
-    }
-  }
-
-  async getUserTweets(req: any, res: express.Response): Promise<void> {
-    try {
-      const userId = req.params.id;
-
-      if (!isValidObjectId(userId)) {
-        res.status(400).send();
-        return;
-      }
-
-      const tweet = await TweetModel.find({ user: userId })
-        .populate("user")
-        .exec();
-
-      if (!tweet) {
-        res.status(404).send();
-        return;
-      }
-
-      res.json({
-        status: "success",
-        data: tweet,
-      });
-    } catch (error) {
-      res.status(500).json({
-        status: "error",
+        status: 'error',
         message: error,
       });
     }
@@ -91,29 +58,26 @@ class TweetsController {
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-          res.status(400).json({ status: "error", errors: errors.array() });
+          res.status(400).json({ status: 'error', errors: errors.array() });
           return;
         }
 
         // TODO: Поправить типизацию
         const data: any = {
           text: req.body.text,
-          images: req.body.images,
           user: user._id,
         };
 
         const tweet = await TweetModel.create(data);
 
-        user.tweets!.push(tweet._id);
-
         res.json({
-          status: "success",
-          data: await tweet.populate("user").execPopulate(),
+          status: 'success',
+          data: await tweet.populate('user').execPopulate(),
         });
       }
     } catch (error) {
       res.status(500).json({
-        status: "error",
+        status: 'error',
         message: error,
       });
     }
@@ -146,7 +110,7 @@ class TweetsController {
       }
     } catch (error) {
       res.status(500).json({
-        status: "error",
+        status: 'error',
         message: error,
       });
     }
@@ -181,11 +145,11 @@ class TweetsController {
       }
     } catch (error) {
       res.status(500).json({
-        status: "error",
+        status: 'error',
         message: error,
       });
     }
   }
 }
 
-export default new TweetsController();
+export const TweetsCtrl = new TweetsController();

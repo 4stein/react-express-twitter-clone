@@ -1,46 +1,48 @@
-import { passport } from "./core/passport";
 import dotenv from "dotenv";
 dotenv.config();
+
 import "./core/db";
 
 import express from "express";
-
-import { registrValidations } from "./validations/register";
-import UserController from "./controllers/UserController";
-import TweetsController from "./controllers/TweetsController";
+import { UserCtrl } from "./controllers/UserController";
+import { registerValidations } from "./validations/register";
+import { passport } from "./core/passport";
+import { TweetsCtrl } from "./controllers/TweetsController";
 import { createTweetValidations } from "./validations/createTweet";
 
 const app = express();
 
-const port = process.env.PORT || 5000;
-
 app.use(express.json());
-// Passport Initialize
 app.use(passport.initialize());
-// users
-app.get("/users", UserController.index);
+
+app.get("/users", UserCtrl.index);
 app.get(
   "/users/me",
   passport.authenticate("jwt", { session: false }),
-  UserController.getUserInfo
+  UserCtrl.getUserInfo
 );
-app.get("/users/:id", UserController.show);
-// tweets
-app.get("/tweets", TweetsController.index);
-app.get('/tweets/:id', TweetsController.show);
-app.get('/tweets/user/:id', TweetsController.getUserTweets);
-app.delete('/tweets/:id', passport.authenticate('jwt'), TweetsController.delete);
-app.patch('/tweets/:id', passport.authenticate('jwt'), createTweetValidations, TweetsController.update);
-app.post('/tweets', passport.authenticate('jwt'), createTweetValidations, TweetsController.create);
-// auth
-app.get("/auth/verify", registrValidations, UserController.verify);
-app.post("/auth/register", registrValidations, UserController.create);
+app.get("/users/:id", UserCtrl.show);
+
+app.get("/tweets", TweetsCtrl.index);
+app.get("/tweets/:id", TweetsCtrl.show);
+app.delete("/tweets/:id", passport.authenticate("jwt"), TweetsCtrl.delete);
+app.patch(
+  "/tweets/:id",
+  passport.authenticate("jwt"),
+  createTweetValidations,
+  TweetsCtrl.update
+);
 app.post(
-  "/auth/login",
-  passport.authenticate("local"),
-  UserController.afterLogin
+  "/tweets",
+  passport.authenticate("jwt"),
+  createTweetValidations,
+  TweetsCtrl.create
 );
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.get("/auth/verify", registerValidations, UserCtrl.verify);
+app.post("/auth/register", registerValidations, UserCtrl.create);
+app.post("/auth/login", passport.authenticate("local"), UserCtrl.afterLogin);
+
+app.listen(process.env.PORT, (): void => {
+  console.log(`SERVER RUNNING ON ${process.env.PORT}`);
 });
