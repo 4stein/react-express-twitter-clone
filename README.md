@@ -1,5 +1,5 @@
 # Fullstack react express twitter-clone app 
-React, Redux, Redux-Saga, Webpack, Express, MongoDB
+React, Redux, Redux-Saga, Webpack, TypeScript, Express, MongoDB
 
 ## Available scripts to start application
 
